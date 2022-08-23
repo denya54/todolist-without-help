@@ -3,6 +3,11 @@ import './App.css';
 import {Todolist} from "./Todolist";
 import {v1} from "uuid";
 
+export type TodolistType = {
+    id: string,
+    title: string,
+    filter: FilterType
+}
 
 export type TaskType = {
     id: string,
@@ -14,6 +19,11 @@ export type FilterType = 'all' | 'active' | 'complete'
 
 
 function App() {
+
+    const [todolists, setTodolists] = useState<Array<TodolistType>>([
+        {id: v1(), title: 'What Learn', filter: 'all'},
+        {id: v1(), title: 'What Buy', filter: 'all'}
+    ])
     const [tasks, setTasks] = useState([
         {id: v1(), title: 'html', isDone: true},
         {id: v1(), title: 'css', isDone: false},
@@ -34,6 +44,10 @@ function App() {
     const changeFilter = (filterValue: FilterType) => {
         setFilter(filterValue)
     }
+    const changeTaskStatus = (taskID: string, newIsDoneValue: boolean) => {
+        let changedTasks = tasks.map(t => t.id === taskID ? {...t, isDone: newIsDoneValue} : t)
+        setTasks(changedTasks)
+    }
 
     let tasksForTodo = tasks
     if (filter === 'active') {
@@ -48,7 +62,10 @@ function App() {
                       tasks={tasksForTodo}
                       deleteTask={deleteTask}
                       changeFilter={changeFilter}
-                      addTask={addTask}/>
+                      addTask={addTask}
+                      changeTaskStatus={changeTaskStatus}
+                      filter={filter}/>
+
         </div>
     );
 }

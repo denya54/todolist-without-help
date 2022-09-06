@@ -4,32 +4,41 @@ import {AddItemComponent} from "./AddItemComponent";
 
 type TodolistPropsType = {
     title: string
+    todoID: string
     tasks: Array<TaskType>
-    deleteTask: (taskID: string) => void
-    changeFilter: (filterValue: FilterType) => void
-    addTask: (taskTitle: string) => void
-    changeTaskStatus: (taskID: string, newIsDoneValue: boolean) => void
+    deleteTask: (todolistID: string, taskID: string) => void
+    changeFilter: (todolistID: string, filterValue: FilterType) => void
+    addTask: (todolistID: string, taskTitle: string) => void
+    changeTaskStatus: (todolistID: string, taskID: string, newIsDoneValue: boolean) => void
     filter: FilterType
+    deleteTodolist: (todoID: string) => void
 }
+
+
 
 export const Todolist = (props: TodolistPropsType) => {
 
     const deleteTask = (taskID: string) => {
-        props.deleteTask(taskID)
+        props.deleteTask(props.todoID, taskID)
     }
 
     const setFilter = (filterValue: FilterType) => {
-        props.changeFilter(filterValue)
+        props.changeFilter(props.todoID, filterValue)
     }
 
     const changeTaskStatus = (taskID: string, newIsDone: boolean) => {
-        props.changeTaskStatus(taskID, newIsDone)
+        props.changeTaskStatus(props.todoID, taskID, newIsDone)
+    }
+
+    const deleteTodo = () => {
+        props.deleteTodolist(props.todoID)
     }
 
     return (
         <div>
             <h3>{props.title}</h3>
-            <AddItemComponent addItem={props.addTask}/>
+            <button onClick={deleteTodo}>x</button>
+            <AddItemComponent addItem={props.addTask} todoID={props.todoID}/>
             <ul> {props.tasks.map(t => <li key={t.id} className={t.isDone ? 'task-complete' : ''}><input type={'checkbox'}
                                                              checked={t.isDone}
                                                              onChange={(e => {

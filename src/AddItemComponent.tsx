@@ -1,7 +1,8 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type AddItemComponentPropsType = {
-    addItem: (itemTitle: string) => void
+    addItem: (todoID: string, itemTitle: string) => void
+    todoID: string
 }
 
 export const AddItemComponent = (props: AddItemComponentPropsType) => {
@@ -17,7 +18,7 @@ export const AddItemComponent = (props: AddItemComponentPropsType) => {
 
     const addNewItem = () => {
         if (inputValue.trim() !== '') {
-            props.addItem(inputValue.trim())
+            props.addItem(props.todoID, inputValue.trim())
             setInputValue('')
         } else {
             setError('This field should contain symbol')

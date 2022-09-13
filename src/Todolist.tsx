@@ -1,6 +1,11 @@
 import React from "react";
 import {FilterType, TaskType} from "./App";
 import {AddItemComponent} from "./AddItemComponent";
+import {ChangeSpan} from "./ChangeSpan";
+import {Tasks} from "./Tasks";
+import {Button, IconButton} from "@mui/material";
+import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
+
 
 type TodolistPropsType = {
     title: string
@@ -12,45 +17,49 @@ type TodolistPropsType = {
     changeTaskStatus: (todolistID: string, taskID: string, newIsDoneValue: boolean) => void
     filter: FilterType
     deleteTodolist: (todoID: string) => void
+    changeTodoTitle: (todolistID: string, newTodoTitle: string) => void
+    changeTaskTitle: (todolistID: string, taskID: string, newTodoTitle: string) => void
 }
 
 
 
 export const Todolist = (props: TodolistPropsType) => {
 
-    const deleteTask = (taskID: string) => {
-        props.deleteTask(props.todoID, taskID)
-    }
-
     const setFilter = (filterValue: FilterType) => {
         props.changeFilter(props.todoID, filterValue)
-    }
-
-    const changeTaskStatus = (taskID: string, newIsDone: boolean) => {
-        props.changeTaskStatus(props.todoID, taskID, newIsDone)
     }
 
     const deleteTodo = () => {
         props.deleteTodolist(props.todoID)
     }
 
+    const addTask = (taskTitle: string) => {
+        props.addTask(props.todoID, taskTitle)
+    }
+
+    const changeTodoName = (newTodoName: string) => {
+        props.changeTodoTitle(props.todoID, newTodoName)
+    }
+
     return (
         <div>
-            <h3>{props.title}</h3>
-            <button onClick={deleteTodo}>x</button>
-            <AddItemComponent addItem={props.addTask} todoID={props.todoID}/>
-            <ul> {props.tasks.map(t => <li key={t.id} className={t.isDone ? 'task-complete' : ''}><input type={'checkbox'}
-                                                             checked={t.isDone}
-                                                             onChange={(e => {
-                                                                 changeTaskStatus(t.id, e.currentTarget.checked)
-                                                             })}/><span >{t.title}</span>
-                <button onClick={() => deleteTask(t.id)}>x</button>
-            </li>)}
+            <h3><ChangeSpan title={props.title} changeFunc={changeTodoName}/></h3>
+            <IconButton onClick={deleteTodo} color="secondary" aria-label="add an alarm">
+                <DeleteForeverTwoToneIcon />
+            </IconButton>
+            <AddItemComponent addItem={addTask}/>
+            <Tasks tasks={props.tasks} deleteTask={props.deleteTask} changeTaskStatus={props.changeTaskStatus} todoID={props.todoID} changeTaskTitle={props.changeTaskTitle}/>
 
-            </ul>
-            <button onClick={() => setFilter('all')} className={props.filter=== 'all' ? 'button-active' : ''}>all</button>
-            <button onClick={() => setFilter('active')}  className={props.filter=== 'active' ? 'button-active' : ''}>active</button>
-            <button onClick={() => setFilter('complete')}  className={props.filter=== 'complete' ? 'button-active' : ''}>complete</button>
+            <Button  onClick={() => setFilter('all')}  variant={props.filter=== 'all' ? 'contained' : 'outlined'} color="secondary">
+                All
+            </Button>
+            <Button  onClick={() => setFilter('active')} variant={props.filter=== 'active' ? 'contained' : 'outlined'} color="secondary">
+                Active
+            </Button>
+            <Button  onClick={() => setFilter('complete')}  variant={props.filter=== 'complete' ? 'contained' : 'outlined'} color="secondary">
+                Complete
+            </Button>
+
         </div>
     )
 }

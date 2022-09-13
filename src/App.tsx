@@ -3,6 +3,8 @@ import './App.css';
 import {Todolist} from "./Todolist";
 import {v1} from "uuid";
 import {AddItemComponent} from "./AddItemComponent";
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
 
 export type TodolistType = {
     id: string,
@@ -93,29 +95,58 @@ function App() {
 
     return (
         <div className="App">
-            <AddItemComponent addItem={addTodolist}/>
-            {todolists.map(todo => {
-                let allTodolistTasks = tasks[todo.id]
-                let tasksForTodo = allTodolistTasks
-                if (todo.filter === 'active') {
-                    tasksForTodo = allTodolistTasks.filter(t => t.isDone === false)
-                } else if (todo.filter === 'complete') {
-                    tasksForTodo = allTodolistTasks.filter(t => t.isDone === true)
-                }
-                return <Todolist key={todo.id}
-                                 title={todo.title}
-                                 todoID={todo.id}
-                                 tasks={tasksForTodo}
-                                 deleteTask={deleteTask}
-                                 changeFilter={changeFilter}
-                                 addTask={addTask}
-                                 changeTaskStatus={changeTaskStatus}
-                                 filter={todo.filter}
-                                 deleteTodolist={deleteTodolist}
-                                 changeTodoTitle={changeTodolistTitle}
-                                 changeTaskTitle={changeTaskTitle}
-                />
-            })}
+
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton
+                        size="large"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        sx={{mr: 2}}
+                    >
+                        <MenuIcon/>
+                    </IconButton>
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                        Todolists
+                    </Typography>
+                    <Button color="inherit">Login</Button>
+                </Toolbar>
+
+            </AppBar>
+            <Container fixed>
+                <Grid container>
+                    <AddItemComponent addItem={addTodolist}/>
+                </Grid>
+                <Grid container spacing={5}>
+                    {todolists.map(todo => {
+                        let allTodolistTasks = tasks[todo.id]
+                        let tasksForTodo = allTodolistTasks
+                        if (todo.filter === 'active') {
+                            tasksForTodo = allTodolistTasks.filter(t => t.isDone === false)
+                        } else if (todo.filter === 'complete') {
+                            tasksForTodo = allTodolistTasks.filter(t => t.isDone === true)
+                        }
+                        return <Grid item>
+                            <Paper style={{padding: '10px'}}>
+                            <Todolist key={todo.id}
+                                      title={todo.title}
+                                      todoID={todo.id}
+                                      tasks={tasksForTodo}
+                                      deleteTask={deleteTask}
+                                      changeFilter={changeFilter}
+                                      addTask={addTask}
+                                      changeTaskStatus={changeTaskStatus}
+                                      filter={todo.filter}
+                                      deleteTodolist={deleteTodolist}
+                                      changeTodoTitle={changeTodolistTitle}
+                                      changeTaskTitle={changeTaskTitle}
+                            />
+                                </Paper>
+                        </Grid>
+                    })}
+                </Grid>
+            </Container>
 
 
         </div>

@@ -43,10 +43,13 @@ export const Todolist = (props: TodolistPropsType) => {
 
     return (
         <div>
-            <h3><ChangeSpan title={props.title} changeFunc={changeTodoName}/></h3>
-            <IconButton onClick={deleteTodo} color="secondary" aria-label="add an alarm">
+            <h3>
+                <ChangeSpan title={props.title} changeFunc={changeTodoName}/>
+                <IconButton onClick={deleteTodo} color="secondary" aria-label="add an alarm">
                 <DeleteForeverTwoToneIcon />
             </IconButton>
+            </h3>
+
             <AddItemComponent addItem={addTask}/>
             <Tasks tasks={props.tasks} deleteTask={props.deleteTask} changeTaskStatus={props.changeTaskStatus} todoID={props.todoID} changeTaskTitle={props.changeTaskTitle}/>
 

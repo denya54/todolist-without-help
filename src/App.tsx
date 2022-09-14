@@ -5,12 +5,9 @@ import {v1} from "uuid";
 import {AddItemComponent} from "./AddItemComponent";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
+import {FilterType, TodolistType} from "./state/todolists-reducer";
 
-export type TodolistType = {
-    id: string,
-    title: string,
-    filter: FilterType
-}
+
 
 export type TaskType = {
     id: string,
@@ -21,7 +18,7 @@ export type TaskStateType = {
     [key: string]: Array<TaskType>
 }
 
-export type FilterType = 'all' | 'active' | 'complete'
+
 
 
 function App() {

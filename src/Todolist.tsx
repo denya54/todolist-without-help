@@ -1,10 +1,11 @@
 import React from "react";
-import {FilterType, TaskType} from "./App";
+import { TaskType} from "./App";
 import {AddItemComponent} from "./AddItemComponent";
 import {ChangeSpan} from "./ChangeSpan";
 import {Tasks} from "./Tasks";
 import {Button, IconButton} from "@mui/material";
 import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
+import {FilterType} from "./state/todolists-reducer";
 
 
 type TodolistPropsType = {

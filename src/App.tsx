@@ -6,19 +6,7 @@ import {AddItemComponent} from "./AddItemComponent";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import {FilterType, TodolistType} from "./state/todolists-reducer";
-
-
-
-export type TaskType = {
-    id: string,
-    title: string,
-    isDone: boolean
-}
-export type TaskStateType = {
-    [key: string]: Array<TaskType>
-}
-
-
+import {TasksStateType} from "./state/tasks-reducer";
 
 
 function App() {
@@ -30,7 +18,7 @@ function App() {
         {id: todolistID1, title: 'What Learn', filter: 'all'},
         {id: todolistID2, title: 'What Buy', filter: 'all'}
     ])
-    const [tasks, setTasks] = useState<TaskStateType>({
+    const [tasks, setTasks] = useState<TasksStateType>({
             [todolistID1]: [
                 {id: v1(), title: 'html', isDone: true},
                 {id: v1(), title: 'css', isDone: false},

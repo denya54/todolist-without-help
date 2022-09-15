@@ -12,7 +12,9 @@ export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
-export const tasksReducer = (state: TasksStateType, action: ActionsTaskType) => {
+const initialState: TasksStateType = {}
+
+export const tasksReducer = (state: TasksStateType = initialState, action: ActionsTaskType) => {
     switch (action.type) {
         case "tasks/REMOVE-TASK": {
             let stateCopy = {...state}

@@ -1,8 +1,8 @@
 import React from "react";
-import {TaskType} from "./App";
 import DeleteForeverTwoToneIcon from "@mui/icons-material/DeleteForeverTwoTone";
 import {Checkbox, IconButton} from "@mui/material";
 import {ChangeSpan} from "./ChangeSpan";
+import {TaskType} from "./state/tasks-reducer";
 
 type TasksPropsType = {
     tasks: Array<TaskType>

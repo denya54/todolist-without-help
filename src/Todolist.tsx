@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {AddItemComponent} from "./AddItemComponent";
 import {ChangeSpan} from "./ChangeSpan";
 import {Tasks} from "./Tasks";
@@ -24,7 +24,8 @@ type TodolistPropsType = {
 
 
 
-export const Todolist = (props: TodolistPropsType) => {
+export const Todolist = React.memo((props: TodolistPropsType) => {
+    console.log('TODO')
 
     const setFilter = (filterValue: FilterType) => {
         props.changeFilter(props.todoID, filterValue)
@@ -34,9 +35,9 @@ export const Todolist = (props: TodolistPropsType) => {
         props.deleteTodolist(props.todoID)
     }
 
-    const addTask = (taskTitle: string) => {
+    const addTask = useCallback((taskTitle: string) => {
         props.addTask(props.todoID, taskTitle)
-    }
+    }, [])
 
     const changeTodoName = (newTodoName: string) => {
         props.changeTodoTitle(props.todoID, newTodoName)
@@ -66,4 +67,4 @@ export const Todolist = (props: TodolistPropsType) => {
 
         </div>
     )
-}
+})

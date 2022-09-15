@@ -6,18 +6,19 @@ import TextField from '@mui/material/TextField';
 
 type AddItemComponentPropsType = {
     addItem: (itemTitle: string) => void
-
 }
 
-export const AddItemComponent = (props: AddItemComponentPropsType) => {
-
+export const AddItemComponent = React.memo((props: AddItemComponentPropsType) => {
+    console.log('add item')
     let [error, setError] = useState<null | string>(null)
 
     let [inputValue, setInputValue] = useState('')
 
     const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.currentTarget.value)
-        setError(null)
+        if (error !== null) {
+            setError(null)
+        }
     }
 
     const addNewItem = () => {
@@ -51,4 +52,4 @@ export const AddItemComponent = (props: AddItemComponentPropsType) => {
             {error ? <div className={'error-message'}>{error}</div> : null}
         </div>
     )
-}
+})

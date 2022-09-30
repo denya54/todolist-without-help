@@ -1,4 +1,4 @@
-import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
+import {addTodolistAC, getTodolistsAC, removeTodolistAC} from "./todolists-reducer";
 import {v1} from "uuid";
 
 
@@ -52,6 +52,13 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             delete stateCopy[action.todoID]
             return stateCopy
         }
+        case 'GET-TODOLISTS': {
+            let copyState = {...state}
+            action.todolists.forEach(td => {
+                copyState[td.id] = []
+            })
+            return copyState
+        }
         default:
             return state
     }
@@ -80,3 +87,4 @@ type ActionsTaskType = ReturnType<typeof removeTaskAC>
     | ReturnType<typeof changeTaskStatusAC>
     | ReturnType<typeof removeTodolistAC>
     | ReturnType<typeof addTodolistAC>
+    | ReturnType<typeof getTodolistsAC>

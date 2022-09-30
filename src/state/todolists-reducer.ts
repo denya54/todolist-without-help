@@ -8,6 +8,13 @@ export type TodolistType = {
     filter: FilterType
 }
 
+export type TodoServerType = {
+    id: string,
+    addedDate: string,
+    order: number,
+    title: string
+}
+
 type TodolistsStateType = Array<TodolistType>
 
 const initialState: TodolistsStateType = []
@@ -23,6 +30,11 @@ export const todolistsReducer = (state: TodolistsStateType = initialState, actio
             return state.map(td => td.id === action.todoID ? {...td, title: action.newTodoTitle} : td)
         case "CHANGE-TODO-FILTER":
             return state.map(td => td.id === action.todoID ? {...td, filter: action.newTodoFilter} : td)
+        case "GET-TODOLISTS":
+            let todolistsFromServer = action.todolists.map(td => {
+                return {...td, filter: 'all'}
+            })
+            return todolistsFromServer
         default:
             return state
     }
@@ -32,7 +44,7 @@ export const removeTodolistAC = (todoID: string) => {
     return {type: 'REMOVE-TODO', todoID} as const
 }
 
-export const addTodolistAC = ( newTodoTitle: string) => {
+export const addTodolistAC = (newTodoTitle: string) => {
     return {type: 'ADD-TODO', newTodoID: v1(), newTodoTitle} as const
 }
 
@@ -44,7 +56,12 @@ export const changeTodoFilterAC = (todoID: string, newTodoFilter: FilterType) =>
     return {type: 'CHANGE-TODO-FILTER', todoID, newTodoFilter} as const
 }
 
+export const getTodolistsAC = (todolists: Array<TodoServerType>) => {
+    return {type: 'GET-TODOLISTS', todolists} as const
+}
+
 type ActionsTodoType = ReturnType<typeof removeTodolistAC>
     | ReturnType<typeof addTodolistAC>
     | ReturnType<typeof changeTodoTitleAC>
     | ReturnType<typeof changeTodoFilterAC>
+    | ReturnType<typeof getTodolistsAC>

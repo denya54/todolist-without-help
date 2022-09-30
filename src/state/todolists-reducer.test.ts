@@ -1,4 +1,4 @@
-import {todolistsReducer, TodolistType} from './todolists-reducer'
+import {getTodolistsAC, todolistsReducer, TodolistType} from './todolists-reducer'
 import { v1 } from 'uuid'
 
 test('correct todolist should be removed', () => {
@@ -67,4 +67,22 @@ test('correct todolist filter should be change', () => {
 
     expect(endState.length).toBe(2)
     expect(endState[0].filter).toBe('active')
+})
+
+test('todolists should be show on the screen', () => {
+    const todolistsFromServ = [
+        {id: '1', addedDate: '11-05-94', order: 0, title: 'First'},
+        {id: '2', addedDate: '12-05-94', order: 0, title: 'Second'},
+    ]
+
+
+
+    const startState: Array<TodolistType> = [
+    ]
+
+    const endState = todolistsReducer(startState, getTodolistsAC(todolistsFromServ))
+
+    expect(endState.length).toBe(2)
+    expect(startState.length).toBe(0)
+    expect(endState[0].title).toBe('First')
 })

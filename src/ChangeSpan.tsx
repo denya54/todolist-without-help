@@ -6,7 +6,9 @@ type ChangeSpanPropsType = {
     changeFunc: (newTitle: string) => void
 }
 
-export const ChangeSpan = (props: ChangeSpanPropsType) => {
+export const ChangeSpan = React.memo((props: ChangeSpanPropsType) => {
+
+    console.log('span')
 
     let [changeMod, setChangeMod] = useState(false)
     let [error, setError] = useState<null | string>(null)
@@ -43,4 +45,4 @@ export const ChangeSpan = (props: ChangeSpanPropsType) => {
                 onBlur={deActivateChangeMod}
                 helperText={error}
             />
-        : <span onDoubleClick={activateChangeMod}>{props.title}</span>}
+        : <span onDoubleClick={activateChangeMod}>{props.title}</span>})

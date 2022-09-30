@@ -9,7 +9,7 @@ type AddItemComponentPropsType = {
 }
 
 export const AddItemComponent = React.memo((props: AddItemComponentPropsType) => {
-    console.log('add item')
+
     let [error, setError] = useState<null | string>(null)
 
     let [inputValue, setInputValue] = useState('')

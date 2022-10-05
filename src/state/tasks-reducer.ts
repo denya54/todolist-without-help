@@ -80,7 +80,7 @@ export const changeTaskStatusAC = (todoID: string, taskID: string, newTaskStatus
     return {type: 'tasks/CHANGE-TASK-STATUS', todoID, taskID, newTaskStatus} as const
 }
 
-type ActionsTaskType = ReturnType<typeof removeTaskAC>
+export type ActionsTaskType = ReturnType<typeof removeTaskAC>
     | ReturnType<typeof addTaskAC>
     | ReturnType<typeof changeTaskTitleAC>
     | ReturnType<typeof changeTaskStatusAC>

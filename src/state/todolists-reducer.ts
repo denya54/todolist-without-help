@@ -1,4 +1,6 @@
 import {v1} from "uuid";
+import {todoAPI} from "../api/api";
+import {AppThunk} from "../store/store";
 
 export type FilterType = 'all' | 'active' | 'complete'
 
@@ -60,7 +62,16 @@ export const getTodolistsAC = (todolists: Array<TodoServerType>) => {
     return {type: 'GET-TODOLISTS', todolists} as const
 }
 
-type ActionsTodoType = ReturnType<typeof removeTodolistAC>
+export const getTodolistsTC = (): AppThunk => {
+    return (dispatch) => {
+        todoAPI.getTodo()
+            .then((res) => {
+                dispatch(getTodolistsAC(res.data))
+            })
+    }
+}
+
+export type ActionsTodoType = ReturnType<typeof removeTodolistAC>
     | ReturnType<typeof addTodolistAC>
     | ReturnType<typeof changeTodoTitleAC>
     | ReturnType<typeof changeTodoFilterAC>

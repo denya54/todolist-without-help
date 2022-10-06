@@ -21,11 +21,14 @@ const instance = axios.create({
 
 export const todoAPI =  {
 
-    getTodo () {
+    getTodo() {
         return instance.get<Array<TodoServerType>>('todo-lists')
     },
     createTodo(newTodoTitle: string) {
         return instance.post('todo-lists', {title: newTodoTitle})
+    },
+    deleteTodo(todolistID: string) {
+        return instance.delete(`/todo-lists/${todolistID}`)
     }
 
 }

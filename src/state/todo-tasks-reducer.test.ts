@@ -1,5 +1,5 @@
 import {tasksReducer, TasksStateType} from "./tasks-reducer";
-import {addTodolistAC, removeTodolistAC, todolistsReducer, TodolistType} from "./todolists-reducer";
+import {createTodolistAC, removeTodolistAC, todolistsReducer, TodolistType} from "./todolists-reducer";
 
 test('new array should be added when new todolist is added', () => {
     const startState: TasksStateType = {
@@ -14,8 +14,13 @@ test('new array should be added when new todolist is added', () => {
             {id: '3', title: 'tea', isDone: false}
         ]
     }
-
-    const action = addTodolistAC('new todolist')
+    let todoFromServer = {
+        id: '1',
+        addedDate: 'null',
+        order: 10,
+        title: 'todolist from server'
+    }
+    const action = createTodolistAC(todoFromServer)
 
     const endState = tasksReducer(startState, action)
 
@@ -34,7 +39,14 @@ test('ids should be equals', () => {
     const startTasksState: TasksStateType = {}
     const startTodolistsState: Array<TodolistType> = []
 
-    const action = addTodolistAC('new todolist')
+    let todoFromServer = {
+        id: '1',
+        addedDate: 'null',
+        order: 10,
+        title: 'todolist from server'
+    }
+
+    const action = createTodolistAC(todoFromServer)
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistsState = todolistsReducer(startTodolistsState, action)
@@ -43,8 +55,8 @@ test('ids should be equals', () => {
     const idFromTasks = keys[0]
     const idFromTodolists = endTodolistsState[0].id
 
-    expect(idFromTasks).toBe(action.newTodoID)
-    expect(idFromTodolists).toBe(action.newTodoID)
+    expect(idFromTasks).toBe(action.todolist.id)
+    expect(idFromTodolists).toBe(action.todolist.id)
 })
 
 test('property with todolistId should be deleted', () => {

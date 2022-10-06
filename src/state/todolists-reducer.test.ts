@@ -1,4 +1,4 @@
-import {getTodolistsAC, todolistsReducer, TodolistType} from './todolists-reducer'
+import {createTodolistAC, getTodolistsAC, todolistsReducer, TodolistType} from './todolists-reducer'
 import { v1 } from 'uuid'
 
 test('correct todolist should be removed', () => {
@@ -19,20 +19,25 @@ test('correct todolist should be removed', () => {
 test('new todolist should be added', () => {
     let todolistId1 = v1()
     let todolistId2 = v1()
-    let todolistId3 = v1()
 
-    let todoTitle = 'HZ'
+
+    let todoFromServer = {
+        id: '1',
+        addedDate: 'null',
+        order: 10,
+        title: 'todolist from server'
+    }
 
     const startState: Array<TodolistType> = [
         {id: todolistId1, title: 'What to learn', filter: 'all'},
         {id: todolistId2, title: 'What to buy', filter: 'all'}
     ]
 
-    const endState = todolistsReducer(startState, {type: 'ADD-TODO', newTodoID: todolistId3, newTodoTitle: todoTitle})
+    const endState = todolistsReducer(startState,  createTodolistAC(todoFromServer))
 
     expect(endState.length).toBe(3)
-    expect(endState[2].id).toBe(todolistId3)
-    expect(endState[2].title).toBe("HZ")
+    expect(endState[0].id).toBe(todoFromServer.id)
+    expect(endState[0].title).toBe('todolist from server')
 })
 
 test('correct todolist should be change title', () => {

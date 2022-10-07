@@ -1,11 +1,12 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import {AddItemComponent} from "./AddItemComponent";
 import {ChangeSpan} from "./ChangeSpan";
 import {Tasks} from "./Tasks";
 import {Button, IconButton} from "@mui/material";
 import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
 import {FilterType} from "./state/todolists-reducer";
-import {TaskType} from "./state/tasks-reducer";
+import {getTasksTC, TaskType} from "./state/tasks-reducer";
+import {useAppDispatch} from "./store/hooks";
 
 
 type TodolistPropsType = {
@@ -25,7 +26,11 @@ type TodolistPropsType = {
 
 
 export const Todolist = React.memo((props: TodolistPropsType) => {
-    console.log('TODO')
+    const dispatch = useAppDispatch()
+
+    useEffect(()=> {
+        dispatch(getTasksTC(props.todoID))
+    }, [])
 
     let allTodolistTasks = props.tasks
     let tasksForTodo = allTodolistTasks

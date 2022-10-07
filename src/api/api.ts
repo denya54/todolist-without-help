@@ -15,11 +15,11 @@ const instance = axios.create({
     withCredentials: true,
     headers: {
         'API-KEY': '089d3e24-70d2-4632-9ce2-42855d61866e'
-    }})
+    }
+})
 
 
-
-export const todoAPI =  {
+export const todoAPI = {
 
     getTodo() {
         return instance.get<Array<TodoServerType>>('todo-lists')
@@ -29,6 +29,14 @@ export const todoAPI =  {
     },
     deleteTodo(todolistID: string) {
         return instance.delete(`/todo-lists/${todolistID}`)
+    },
+
+
+    getTasks(todolistID: string) {
+        return instance.get(`/todo-lists/${todolistID}/tasks`)
+    },
+    createTask(todolistID: string, newTaskTitle: string){
+        return instance.post(`/todo-lists/${todolistID}/tasks`, {title: newTaskTitle })
     }
 
 }

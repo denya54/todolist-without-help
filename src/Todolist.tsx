@@ -16,7 +16,7 @@ type TodolistPropsType = {
     deleteTask: (todolistID: string, taskID: string) => void
     changeFilter: (todolistID: string, filterValue: FilterType) => void
     addTask: (todolistID: string, taskTitle: string) => void
-    changeTaskStatus: (todolistID: string, taskID: string, newIsDoneValue: boolean) => void
+    changeTaskStatus: (todolistID: string, taskID: string, newTaskStatus: number) => void
     filter: FilterType
     deleteTodolist: (todoID: string) => void
     changeTodoTitle: (todolistID: string, newTodoTitle: string) => void
@@ -35,9 +35,9 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     let allTodolistTasks = props.tasks
     let tasksForTodo = allTodolistTasks
     if (props.filter === 'active') {
-        tasksForTodo = allTodolistTasks.filter(t => t.isDone === false)
+        tasksForTodo = allTodolistTasks.filter(t => t.status !== 2)
     } else if (props.filter === 'complete') {
-        tasksForTodo = allTodolistTasks.filter(t => t.isDone === true)
+        tasksForTodo = allTodolistTasks.filter(t => t.status === 2)
     }
 
     const setFilter = useCallback((filterValue: FilterType) => {

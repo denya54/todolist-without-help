@@ -7,7 +7,7 @@ import {TaskType} from "./state/tasks-reducer";
 type TaskPropsType = {
     task: TaskType
     todoID: string
-    changeTaskStatus: (todoID: string, taskID: string, newStatus: boolean) => void
+    changeTaskStatus: (todoID: string, taskID: string, newStatus: number) => void
     changeTaskTitle: (todoID: string, taskID: string, newTitle: string) => void
     deleteTask: (todoID: string, taskID: string) => void
 }
@@ -18,8 +18,14 @@ export const Task = (props: TaskPropsType) => {
         props.deleteTask(props.todoID, taskID)
     }, [props.deleteTask, props.todoID])
 
-    const changeTaskStatus = useCallback((taskID: string, newIsDone: boolean) => {
-        props.changeTaskStatus(props.todoID, taskID, newIsDone)
+    const changeTaskStatus = useCallback((taskID: string, newTaskStatus: boolean) => {
+        if (newTaskStatus) {
+            props.changeTaskStatus(props.todoID, taskID, 2)
+        } else {
+            props.changeTaskStatus(props.todoID, taskID, 0)
+        }
+        // props.changeTaskStatus(props.todoID, taskID, newIsDone)
+        // alert(newIsDone)
     }, [props.changeTaskStatus, props.todoID])
 
     const changeTaskTitle = useCallback(( newTitle: string) => {
@@ -28,8 +34,8 @@ export const Task = (props: TaskPropsType) => {
 
     return (
 
-            <li key={props.task.id} className={props.task.isDone ? 'task-complete' : ''}>
-                <Checkbox color="secondary" checked={props.task.isDone} onChange={(e => {
+            <li key={props.task.id} className={props.task.status === 2 ? 'task-complete' : ''}>
+                <Checkbox color="secondary" checked={props.task.status === 2} onChange={(e => {
                     changeTaskStatus(props.task.id, e.currentTarget.checked)
                 })}/>
                 <ChangeSpan title={props.task.title} changeFunc={changeTaskTitle}/>

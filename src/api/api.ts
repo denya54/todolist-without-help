@@ -37,6 +37,21 @@ export const todoAPI = {
     },
     createTask(todolistID: string, newTaskTitle: string){
         return instance.post(`/todo-lists/${todolistID}/tasks`, {title: newTaskTitle })
+    },
+    deleteTask(todolistID: string, taskID: string){
+        return instance.delete(`/todo-lists/${todolistID}/tasks/${taskID}`)
+    },
+    updateTask(todolistID: string, taskID: string, model: UpdateTaskModelType){
+        return instance.put(`/todo-lists/${todolistID}/tasks/${taskID}`, {model})
     }
 
+}
+
+export type UpdateTaskModelType = {
+    title: string
+    description: string
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
 }

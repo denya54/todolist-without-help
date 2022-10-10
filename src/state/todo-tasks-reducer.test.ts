@@ -4,14 +4,14 @@ import {createTodolistAC, removeTodolistAC, todolistsReducer, TodolistType} from
 test('new array should be added when new todolist is added', () => {
     const startState: TasksStateType = {
         'todolistId1': [
-            {id: '1', title: 'CSS', isDone: false},
-            {id: '2', title: 'JS', isDone: true},
-            {id: '3', title: 'React', isDone: false}
+            {id: '1', title: 'CSS', status: 1},
+            {id: '2', title: 'JS', status: 2},
+            {id: '3', title: 'React', status: 1}
         ],
         'todolistId2': [
-            {id: '1', title: 'bread', isDone: false},
-            {id: '2', title: 'milk', isDone: true},
-            {id: '3', title: 'tea', isDone: false}
+            {id: '1', title: 'bread', status: 1},
+            {id: '2', title: 'milk', status: 2},
+            {id: '3', title: 'tea', status: 1}
         ]
     }
     let todoFromServer = {
@@ -62,14 +62,14 @@ test('ids should be equals', () => {
 test('property with todolistId should be deleted', () => {
     const startState: TasksStateType = {
         'todolistId1': [
-            {id: '1', title: 'CSS', isDone: false},
-            {id: '2', title: 'JS', isDone: true},
-            {id: '3', title: 'React', isDone: false}
+            {id: '1', title: 'CSS', status: 1},
+            {id: '2', title: 'JS', status: 2},
+            {id: '3', title: 'React', status: 1}
         ],
         'todolistId2': [
-            {id: '1', title: 'bread', isDone: false},
-            {id: '2', title: 'milk', isDone: true},
-            {id: '3', title: 'tea', isDone: false}
+            {id: '1', title: 'bread', status: 1},
+            {id: '2', title: 'milk', status: 2},
+            {id: '3', title: 'tea', status: 1}
         ]
     }
 

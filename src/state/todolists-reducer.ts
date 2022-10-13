@@ -69,6 +69,7 @@ export const getTodolistsTC = (): AppThunk => {
     return (dispatch) => {
         todoAPI.getTodo()
             .then((res) => {
+
                 dispatch(getTodolistsAC(res.data))
             })
     }
@@ -78,8 +79,8 @@ export const createTodolistTC = (newTodoTitle: string): AppThunk => {
     return (dispatch) => {
         todoAPI.createTodo(newTodoTitle)
             .then((res) => {
-                debugger
-                dispatch(createTodolistAC(res.data.item))
+
+                dispatch(createTodolistAC(res.data.data.item))
             })
     }
 }
@@ -87,8 +88,20 @@ export const deleteTodolistTC = (todolistID: string): AppThunk => {
     return (dispatch) => {
         todoAPI.deleteTodo(todolistID)
             .then((res) => {
-                debugger
+
                 dispatch(removeTodolistAC(todolistID))
+            })
+    }
+}
+
+export const changeTodolistTitleTC = (todolistID: string, newTitle: string): AppThunk => {
+    return (dispatch) => {
+        todoAPI.updateTodo(todolistID, newTitle)
+            .then((res) => {
+                if (res.data.resultCode === 0) {
+                    dispatch(changeTodoTitleAC(todolistID, newTitle))
+                }
+
             })
     }
 }

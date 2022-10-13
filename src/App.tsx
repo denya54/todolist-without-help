@@ -6,17 +6,13 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import MenuIcon from '@mui/icons-material/Menu';
 import {
 
-    changeTodoFilterAC,
-    changeTodoTitleAC, createTodolistTC, deleteTodolistTC,
+    changeTodoFilterAC, changeTodolistTitleTC,
+     createTodolistTC, deleteTodolistTC,
     FilterType, getTodolistsTC,
     TodolistType
 } from "./state/todolists-reducer";
 import {
-    addTaskAC,
-    changeTaskStatusAC, changeTaskStatusTC,
-    changeTaskTitleAC,
-    createTaskTC, deleteTaskTC,
-    removeTaskAC,
+     changeTaskStatusTC, changeTaskTitleTC, createTaskTC, deleteTaskTC,
     TasksStateType
 } from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -40,13 +36,13 @@ function App() {
     const changeTaskStatus = useCallback((todolistID: string, taskID: string, newStatus: number) => {
         dispatch(changeTaskStatusTC(todolistID, taskID, newStatus))}, [])
     const changeTaskTitle = useCallback((todolistID: string, taskID: string, newTaskTitle: string) => {
-        dispatch(changeTaskTitleAC(todolistID, taskID, newTaskTitle))
+        dispatch(changeTaskTitleTC(todolistID, taskID, newTaskTitle))
     }, [])
 
     const changeFilter = useCallback((todolistID: string, filterValue: FilterType) => {dispatch(changeTodoFilterAC(todolistID, filterValue))}, [])
     const deleteTodolist = useCallback((todolistID: string) => {dispatch(deleteTodolistTC(todolistID))}, [])
     const addTodolist = useCallback((todolistTitle: string) => {dispatch(createTodolistTC(todolistTitle))}, [])
-    const changeTodolistTitle = useCallback((todolistID: string, newTodoTitle: string) => {dispatch(changeTodoTitleAC(todolistID, newTodoTitle))}, [])
+    const changeTodolistTitle = useCallback((todolistID: string, newTodoTitle: string) => {dispatch(changeTodolistTitleTC(todolistID, newTodoTitle))}, [])
 
 
     useEffect(() => {

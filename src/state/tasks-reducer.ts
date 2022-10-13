@@ -1,5 +1,4 @@
 import {createTodolistAC, getTodolistsAC, removeTodolistAC} from "./todolists-reducer";
-import {v1} from "uuid";
 import {AppRootStateType, AppThunk} from "../store/store";
 import {todoAPI} from "../api/api";
 
@@ -125,7 +124,6 @@ export const createTaskTC = (todoID: string, newTaskTitle: string): AppThunk => 
     return (dispatch) => {
         todoAPI.createTask(todoID, newTaskTitle)
             .then((res) => {
-                debugger
                 let task = res.data.data.item
                 dispatch(addTaskAC(todoID, task))
             })
@@ -136,7 +134,6 @@ export const deleteTaskTC = (todoID: string, taskID: string): AppThunk => {
     return (dispatch) => {
         todoAPI.deleteTask(todoID, taskID)
             .then((res) => {
-                debugger
                 if (res.data.resultCode === 0) {
                     dispatch(removeTaskAC(todoID, taskID))
                 }
@@ -151,9 +148,7 @@ export const changeTaskStatusTC = (todoID: string, taskID: string, newStatus: nu
         let tasksFromCurrentTodo = allTasks[todoID]
         let currentTask = tasksFromCurrentTodo.find(t => t.id === taskID)
 
-
         if (currentTask) {
-
             todoAPI.updateTask(todoID, taskID, {
                 title: currentTask.title,
                 description: '1',
@@ -165,8 +160,30 @@ export const changeTaskStatusTC = (todoID: string, taskID: string, newStatus: nu
                 .then((res) => {
                     debugger
                     if (res.data.resultCode === 0) {
-                        dispatch(changeTaskStatusAC(todoID, taskID, res.data.item.status))
+                        dispatch(changeTaskStatusAC(todoID, taskID, res.data.data.item.status))
                     }
+                })
+        }
+    }
+}
+
+export const changeTaskTitleTC = (todoID: string, taskID: string, newTitle: string): AppThunk => {
+    return (dispatch, getState: () => AppRootStateType) => {
+        let tasks = getState().tasks
+        let tasksForTodo = tasks[todoID]
+        let currentTask = tasksForTodo.find(t => t.id === taskID)
+        if(currentTask) {
+            todoAPI.updateTask(todoID, taskID, {
+                title: newTitle,
+                description: '',
+                status: currentTask.status,
+                priority: 0,
+                startDate: '',
+                deadline: ''
+            })
+                .then((res) => {
+                    debugger
+                    dispatch(changeTaskTitleAC(todoID, taskID, res.data.data.item.title))
                 })
         }
     }

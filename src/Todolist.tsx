@@ -5,14 +5,14 @@ import {Tasks} from "./Tasks";
 import {Button, IconButton} from "@mui/material";
 import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
 import {FilterType} from "./state/todolists-reducer";
-import {getTasksTC, TaskType} from "./state/tasks-reducer";
+import {getTasksTC, TaskServerType, TaskType} from "./state/tasks-reducer";
 import {useAppDispatch} from "./store/hooks";
 
 
 type TodolistPropsType = {
     title: string
     todoID: string
-    tasks: Array<TaskType>
+    tasks: Array<TaskServerType>
     deleteTask: (todolistID: string, taskID: string) => void
     changeFilter: (todolistID: string, filterValue: FilterType) => void
     addTask: (todolistID: string, taskTitle: string) => void

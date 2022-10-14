@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {Axios, AxiosResponse} from "axios";
 import { TodoServerType} from "../state/todolists-reducer";
 import {TaskServerType} from "../state/tasks-reducer";
 
@@ -38,7 +38,7 @@ export const todoAPI = {
         return instance.delete<DelTaskResponse>(`/todo-lists/${todolistID}/tasks/${taskID}`)
     },
     updateTask(todolistID: string, taskID: string, model: UpdateTaskModelType) {
-        return instance.put<UpdTaskResponse>(`/todo-lists/${todolistID}/tasks/${taskID}`, {model})
+        return instance.put<UpdateTaskModelType, AxiosResponse<UpdTaskResponse>>(`/todo-lists/${todolistID}/tasks/${taskID}`, {model})
     }
 
 }

@@ -1,10 +1,10 @@
 import React from "react";
 
-import {TaskType} from "./state/tasks-reducer";
+import {TaskServerType, TaskType} from "./state/tasks-reducer";
 import {Task} from "./Task";
 
 type TasksPropsType = {
-    tasks: Array<TaskType>
+    tasks: Array<TaskServerType>
     deleteTask: (todolistID: string, taskID: string) => void
     changeTaskStatus: (todolistID: string, taskID: string, newTaskStatus: number) => void
     todoID: string

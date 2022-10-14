@@ -2,10 +2,10 @@ import {Checkbox, IconButton} from "@mui/material";
 import {ChangeSpan} from "./ChangeSpan";
 import DeleteForeverTwoToneIcon from "@mui/icons-material/DeleteForeverTwoTone";
 import React, {useCallback} from "react";
-import {TaskType} from "./state/tasks-reducer";
+import {TaskServerType, TaskType} from "./state/tasks-reducer";
 
 type TaskPropsType = {
-    task: TaskType
+    task: TaskServerType
     todoID: string
     changeTaskStatus: (todoID: string, taskID: string, newStatus: number) => void
     changeTaskTitle: (todoID: string, taskID: string, newTitle: string) => void

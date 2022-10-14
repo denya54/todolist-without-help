@@ -10,12 +10,12 @@ export type TaskType = {
 }
 export type TaskServerType = {
     addedDate: string
-    deadline: string | null
-    description: string | null
+    deadline: string
+    description: string
     id: string
     order: number
     priority: number
-    startDate: string | null
+    startDate: string
     status: number
     title: string
     todoListId: string
@@ -23,7 +23,7 @@ export type TaskServerType = {
 
 
 export type TasksStateType = {
-    [key: string]: Array<TaskType>
+    [key: string]: Array<TaskServerType>
 }
 
 const initialState: TasksStateType = {}
@@ -38,7 +38,8 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         }
         case "tasks/ADD-TASK": {
             let stateCopy = {...state}
-            let newTask = {id: action.task.id, title: action.task.title, status: action.task.status}
+            let newTask = action.task
+            //id: action.task.id, title: action.task.title, status: action.task.status}
             const tasks = stateCopy[action.task.todoListId];
             stateCopy[action.task.todoListId] = [newTask, ...tasks]
 
@@ -149,13 +150,14 @@ export const changeTaskStatusTC = (todoID: string, taskID: string, newStatus: nu
         let currentTask = tasksFromCurrentTodo.find(t => t.id === taskID)
 
         if (currentTask) {
+            debugger
             todoAPI.updateTask(todoID, taskID, {
                 title: currentTask.title,
-                description: '1',
+                description: currentTask.description,
                 status: newStatus,
-                priority: 0,
-                startDate: '1',
-                deadline: '1'
+                priority: currentTask.priority,
+                startDate: currentTask.startDate,
+                deadline: currentTask.deadline
             })
                 .then((res) => {
                     debugger
